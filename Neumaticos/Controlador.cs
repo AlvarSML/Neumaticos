@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 
 namespace Neumaticos {
-    class Controlador : IDisposable {
+    public class Controlador : IDisposable {
         private NeumaticosDB _ctx;
         private bool disposed;
 
+        /* Constructores */
         /// <summary>
         /// Contrloador con el contexto de la BDD
         /// </summary>
@@ -19,8 +20,24 @@ namespace Neumaticos {
         /// Constructor de controlador
         /// </summary>
         /// <param name="bd">Base de datos a cargar</param>
-        internal Controlador(NeumaticosDB bd) {
+        public Controlador(NeumaticosDB bd) {
             _ctx = bd;
+        }
+
+        /* Metodos */
+        /**
+         *  TODO: 
+         * - pasar a expresion
+         * - filtro por precio y por fabricante
+         */
+        public List<Producto> LeerProductos(int? Alto, int? Ancho, int? Radial) {
+            IQueryable<Producto> query = _ctx.Productos.AsQueryable();
+
+            if (Alto != null) query = query.Where(x => x.Alto == Alto);
+            if (Ancho != null) query = query.Where(x => x.Ancho == Ancho);
+            if (Radial != null) query = query.Where(x => x.Radial == Radial);
+
+            return query.ToList();
         }
 
         /// <summary>
@@ -106,13 +123,22 @@ namespace Neumaticos {
             _ctx.SaveChanges();
         }
 
+        /// <summary>
+        /// Añade una linea a una factura
+        /// </summary>
+        /// <param name="d"></param>
         public void crearLineaFactura(DetalleFactura d) {
             _ctx.DetalleFacturas.Add(d);
             _ctx.SaveChanges();
         }
 
-        public List<DetalleFactura> leerLienas(Factura f) {
-            return _ctx.DetalleFacturas.Where(d => d.FacturaId == f.FacturaId).ToList();
+        /// <summary>
+        /// Devuelve todas las lineas de una factura
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public List<DetalleFactura> leerLineasFactura(int facturaId) {
+            return _ctx.DetalleFacturas.Where(d => d.FacturaId == facturaId).ToList();
         }
 
         // Intento de eliminar 

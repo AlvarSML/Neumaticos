@@ -33,12 +33,16 @@ namespace Neumaticos {
             Help.ShowHelp(this, Application.StartupPath + @"\" + "Documentation.chm", HelpNavigator.Topic, "/html/d2a01c14-014d-4a67-b72f-5b87a11d374c.htm");
         }
 
+        /// <summary>
+        /// Carga las lineas de la factura
+        /// </summary>
+        /// <param name="f">Factura de la que cargar lineas</param>
         private void cargarLineas(Factura f) {
             int j = 0;
             ListViewItem i;
             ListViewSubItem concepto, cantidad, precioud, total;
 
-            foreach (DetalleFactura d in new Controlador().leerLienas(f)) {
+            foreach (DetalleFactura d in new Controlador().leerLineasFactura(f.FacturaId)) {
                 j++;
 
                 i = new ListViewItem() {
