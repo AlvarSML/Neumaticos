@@ -31,16 +31,21 @@ namespace PruebasNeumaticos {
         [TestMethod]
         public void CrearCliente() {
             Cliente c = new Cliente() {
-                Nombre = "Cliente1",
+                Nombre = null,
                 Direccion = "Direccion1",
                 DNICIF = "123456A",
                 Telefono = "123456"
             };
 
-            int? n = _controlador.crearCliente(c);
+            try {
+                int? n = _controlador.crearCliente(c);
+                Assert.IsNotNull(n);
+                Assert.Equals(n, 1);
 
-            Assert.IsNotNull(n);
-            Assert.Equals(n, 1);
+                Assert.Fail();
+            } catch (Exception e) {
+                
+            }          
             
         }
 
