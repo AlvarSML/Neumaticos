@@ -68,9 +68,9 @@ namespace Neumaticos {
         /// Crea un cliente el la BDD
         /// </summary>
         /// <param name="c">Cliente a crear</param>
-        public void crearCliente(Cliente c) {
+        public int? crearCliente(Cliente c) {
             _ctx.Clientes.Add(c);
-            _ctx.SaveChanges();
+            return _ctx.SaveChanges();
         }
 
         

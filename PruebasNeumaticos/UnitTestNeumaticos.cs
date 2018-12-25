@@ -28,6 +28,22 @@ namespace PruebasNeumaticos {
             Assert.AreEqual(20,prods[0].Precio);
         }
 
+        [TestMethod]
+        public void CrearCliente() {
+            Cliente c = new Cliente() {
+                Nombre = "Cliente1",
+                Direccion = "Direccion1",
+                DNICIF = "123456A",
+                Telefono = "123456"
+            };
+
+            int? n = _controlador.crearCliente(c);
+
+            Assert.IsNotNull(n);
+            Assert.Equals(n, 1);
+            
+        }
+
         [ClassInitialize]
         public static void ClassInit(TestContext tc) {
 
